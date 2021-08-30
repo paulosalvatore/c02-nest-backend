@@ -25,18 +25,45 @@ export class PersonagemService {
   }
 
   findAll() {
-    return `This action returns all personagem`;
+    return this.personagens;
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} personagem`;
+    return this.personagens.find((personagem) => personagem.id === id);
   }
 
   update(id: number, updatePersonagemDto: UpdatePersonagemDto) {
-    return `This action updates a #${id} personagem`;
+    const index = this.personagens.findIndex(
+      (personagem) => personagem.id === id,
+    );
+
+    // Jeito 1
+    // const personagemAtual = this.personagens[index];
+
+    // const novoPersonagem = {
+    //   ...personagemAtual,
+    //   ...updatePersonagemDto,
+    // };
+
+    // this.personagens[index] = novoPersonagem;
+
+    // Jeito 2
+    this.personagens[index] = {
+      ...this.personagens[index],
+      ...updatePersonagemDto,
+    };
+
+    return this.personagens[index];
   }
 
   remove(id: number) {
-    return `This action removes a #${id} personagem`;
+    const index = this.personagens.findIndex(
+      (personagem) => personagem.id === id,
+    );
+
+    // delete this.personagens[index];
+    // this.personagens = this.personagens.filter((p) => p.id !== id);
+
+    this.personagens.splice(index, 1);
   }
 }
