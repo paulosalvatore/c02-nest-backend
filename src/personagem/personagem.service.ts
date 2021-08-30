@@ -5,15 +5,23 @@ import { Personagem } from './entities/personagem.entity';
 
 @Injectable()
 export class PersonagemService {
-  personagens: Personagem[] = [
+  private personagens: Personagem[] = [
     {
+      id: 1,
       nome: 'Rick Sanchez',
       imagemUrl: 'http://imagem.com',
     },
   ];
 
   create(createPersonagemDto: CreatePersonagemDto) {
-    return createPersonagemDto;
+    const personagem: Personagem = {
+      id: this.personagens.length + 1,
+      ...createPersonagemDto,
+    };
+
+    this.personagens.push(personagem);
+
+    return personagem;
   }
 
   findAll() {
