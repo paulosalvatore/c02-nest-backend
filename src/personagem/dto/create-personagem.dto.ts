@@ -5,6 +5,8 @@ export class CreatePersonagemDto implements Personagem {
   @IsString()
   nome: string;
 
-  @IsUrl()
+  @IsUrl({
+    require_protocol: true,
+  })
   imagemUrl: string;
 }
