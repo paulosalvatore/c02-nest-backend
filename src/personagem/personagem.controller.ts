@@ -19,7 +19,38 @@ export class PersonagemController {
 
   @Post()
   create(@Body() createPersonagemDto: CreatePersonagemDto) {
-    return this.personagemService.create(createPersonagemDto);
+    // if (
+    //   !createPersonagemDto ||
+    //   !createPersonagemDto.nome ||
+    //   typeof createPersonagemDto.nome !== 'string' ||
+    //   !createPersonagemDto.imagemUrl
+    // ) {
+    //   throw Error('Erro ao validar entidade');
+    // }
+
+    // const erros = [];
+
+    // if (!createPersonagemDto.nome) {
+    //   erros.push('Nome precisa existir');
+    // }
+
+    // if (typeof createPersonagemDto.nome !== 'string') {
+    //   erros.push('Nome precisa ser string');
+    // }
+
+    // if (erros.length) {
+    //   return erros;
+    // }
+
+    // const objeto = {
+    //   nome: createPersonagemDto.nome,
+    //   imagemUrl: createPersonagemDto.imagemUrl,
+    // };
+
+    // return objeto;
+
+    return createPersonagemDto;
+    // return this.personagemService.create(createPersonagemDto);
   }
 
   @Get()
