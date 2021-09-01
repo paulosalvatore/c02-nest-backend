@@ -16,16 +16,28 @@ export class PersonagemService {
 
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createPersonagemDto: CreatePersonagemDto) {
+  async create(createPersonagemDto: CreatePersonagemDto) {
     const personagem: Personagem = {
-      id: this.personagens.length + 1,
+      // id: this.personagens.length + 1,
       ...createPersonagemDto,
     };
 
-    this.personagens.push(personagem);
+    return await this.prisma.personagem.create({
+      data: personagem,
+    });
 
-    return personagem;
+    // this.personagens.push(personagem);
+
+    // return personagem;
   }
+
+  /*
+  Explorar os seguintes métodos do Prisma:
+  findMany
+  findUnique({ where: { id } })
+  update
+  delete
+  */
 
   findAll() {
     return this.personagens;
