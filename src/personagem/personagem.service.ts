@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePersonagemDto } from './dto/create-personagem.dto';
 import { UpdatePersonagemDto } from './dto/update-personagem.dto';
 import { Personagem } from './entities/personagem.entity';
@@ -12,6 +13,8 @@ export class PersonagemService {
       imagemUrl: 'http://imagem.com',
     },
   ];
+
+  constructor(private readonly prisma: PrismaService) {}
 
   create(createPersonagemDto: CreatePersonagemDto) {
     const personagem: Personagem = {
