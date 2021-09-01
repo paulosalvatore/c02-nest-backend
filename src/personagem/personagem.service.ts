@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePersonagemDto } from './dto/create-personagem.dto';
 import { UpdatePersonagemDto } from './dto/update-personagem.dto';
@@ -16,69 +17,28 @@ export class PersonagemService {
 
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createPersonagemDto: CreatePersonagemDto) {
-    const personagem: Personagem = {
-      // id: this.personagens.length + 1,
-      ...createPersonagemDto,
-    };
-
-    return await this.prisma.personagem.create({
-      data: personagem,
+  create(createPersonagemDto: CreatePersonagemDto) {
+    return this.prisma.personagem.create({
+      data: createPersonagemDto,
     });
-
-    // this.personagens.push(personagem);
-
-    // return personagem;
   }
 
-  /*
-  Explorar os seguintes métodos do Prisma:
-  findMany
-  findUnique({ where: { id } })
-  update
-  delete
-  */
-
   findAll() {
-    return this.personagens;
+    return this.prisma.personagem.findMany();
   }
 
   findOne(id: number) {
-    return this.personagens.find((personagem) => personagem.id === id);
+    return this.prisma.personagem.findUnique({ where: { id } });
   }
 
   update(id: number, updatePersonagemDto: UpdatePersonagemDto) {
-    const index = this.personagens.findIndex(
-      (personagem) => personagem.id === id,
-    );
-
-    // Jeito 1
-    // const personagemAtual = this.personagens[index];
-
-    // const novoPersonagem = {
-    //   ...personagemAtual,
-    //   ...updatePersonagemDto,
-    // };
-
-    // this.personagens[index] = novoPersonagem;
-
-    // Jeito 2
-    this.personagens[index] = {
-      ...this.personagens[index],
-      ...updatePersonagemDto,
-    };
-
-    return this.personagens[index];
+    return this.prisma.personagem.update({
+      where: { id },
+      data: updatePersonagemDto,
+    });
   }
 
   remove(id: number) {
-    const index = this.personagens.findIndex(
-      (personagem) => personagem.id === id,
-    );
-
-    // delete this.personagens[index];
-    // this.personagens = this.personagens.filter((p) => p.id !== id);
-
-    this.personagens.splice(index, 1);
+    return this.prisma.personagem.delete({ where: { id } });
   }
 }
