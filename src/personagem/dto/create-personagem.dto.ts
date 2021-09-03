@@ -1,4 +1,4 @@
-import { IsString, IsUrl } from 'class-validator';
+import { IsInt, IsString, IsUrl } from 'class-validator';
 import { Personagem } from '../entities/personagem.entity';
 
 export class CreatePersonagemDto implements Personagem {
@@ -9,4 +9,7 @@ export class CreatePersonagemDto implements Personagem {
     require_protocol: true,
   })
   imagemUrl: string;
+
+  @IsInt()
+  origemId: number;
 }
