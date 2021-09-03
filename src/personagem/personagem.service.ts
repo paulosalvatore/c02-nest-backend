@@ -10,6 +10,13 @@ export class PersonagemService {
   create(createPersonagemDto: CreatePersonagemDto) {
     return this.prisma.personagem.create({
       data: createPersonagemDto,
+      include: {
+        origem: {
+          select: {
+            nome: true,
+          },
+        },
+      },
     });
   }
 
