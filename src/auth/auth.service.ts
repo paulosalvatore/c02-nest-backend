@@ -2,6 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { Usuario } from 'src/usuario/entities/usuario.entity';
 import { UsuarioService } from 'src/usuario/usuario.service';
 
+// Bcrypt
+import * as bcrypt from 'bcrypt';
+import { UnauthorizedError } from 'src/errors/unauthorized.error';
+
 @Injectable()
 export class AuthService {
   constructor(private readonly usuarioService: UsuarioService) {}
@@ -17,8 +21,17 @@ export class AuthService {
   private async validateUser(email: string, senha: string) {
     const usuario = await this.usuarioService.findByEmail(email);
 
-    // TODO: Validar se a senha é a mesma
+    if (usuario) {
+      const isPasswordValid = await bcrypt.compare(senha, usuario.senha);
 
-    return usuario;
+      if (isPasswordValid) {
+        return {
+          ...usuario,
+          senha: undefined,
+        };
+      }
+    }
+
+    throw new UnauthorizedError('E-mail e/ou senha fornecidos são incorretos.');
   }
 }
