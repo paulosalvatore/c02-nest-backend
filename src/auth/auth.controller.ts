@@ -7,7 +7,6 @@ import { Public } from './public.decorator';
 export class AuthController {
   constructor(private readonly service: AuthService) {}
 
-  @Public()
   @Post('login')
   @HttpCode(HttpStatus.OK)
   login(@Body() { email, senha }: LoginRequestBody) {
