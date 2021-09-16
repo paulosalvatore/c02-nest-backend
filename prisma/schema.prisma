@@ -15,6 +15,17 @@ model Personagem {
 
   origem   Localizacao @relation(fields: [origemId], references: [id])
   origemId Int
+
+  episodios Episodio[]
+}
+
+model Episodio {
+  id          Int      @id @default(autoincrement())
+  nome        String
+  dataEstreia DateTime @db.Date
+  episodio    String   @unique
+
+  personagens Personagem[]
 }
 
 model Localizacao {
