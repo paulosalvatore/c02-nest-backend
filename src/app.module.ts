@@ -7,9 +7,10 @@ import { UsuarioModule } from './usuario/usuario.module';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { EpisodioModule } from './episodio/episodio.module';
 
 @Module({
-  imports: [PersonagemModule, PrismaModule, UsuarioModule, AuthModule],
+  imports: [PersonagemModule, PrismaModule, UsuarioModule, AuthModule, EpisodioModule],
   controllers: [AppController],
   providers: [
     AppService,
