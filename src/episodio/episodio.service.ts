@@ -17,8 +17,8 @@ export class EpisodioService {
       ...createEpisodioDto,
       dataEstreia: new Date(createEpisodioDto.dataEstreia),
       personagens: {
-        create: [...createEpisodioDto.personagens],
-        connect: personagensIds.map((id) => ({ id })),
+        create: createEpisodioDto.personagens,
+        connect: personagensIds?.map((id) => ({ id })),
       },
     };
 
