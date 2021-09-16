@@ -1,15 +1,27 @@
+import { Prisma } from '.prisma/client';
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateEpisodioDto } from './dto/create-episodio.dto';
 import { UpdateEpisodioDto } from './dto/update-episodio.dto';
 
 @Injectable()
 export class EpisodioService {
+  constructor(private readonly prisma: PrismaService) {}
+
   create(createEpisodioDto: CreateEpisodioDto) {
-    return 'This action adds a new episodio';
+    const data: Prisma.EpisodioCreateInput = {
+      ...createEpisodioDto,
+      dataEstreia: new Date(createEpisodioDto.dataEstreia),
+      personagens: {
+        create: [...createEpisodioDto.personagens],
+      },
+    };
+
+    return this.prisma.episodio.create({ data });
   }
 
   findAll() {
-    return `This action returns all episodio`;
+    return this.prisma.episodio.findMany({ include: { personagens: true } });
   }
 
   findOne(id: number) {
