@@ -6,7 +6,6 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { CreatePersonagemDto } from 'src/personagem/dto/create-personagem.dto';
-import { Personagem } from 'src/personagem/entities/personagem.entity';
 import { Episodio } from '../entities/episodio.entity';
 
 export class CreateEpisodioDto implements Episodio {
