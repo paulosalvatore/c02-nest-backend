@@ -37,7 +37,32 @@ export class EpisodioService {
   }
 
   update(id: number, updateEpisodioDto: UpdateEpisodioDto) {
-    return `This action updates a #${id} episodio`;
+    const personagensIds = updateEpisodioDto.personagensIds;
+
+    delete updateEpisodioDto.personagensIds;
+
+    const personagensDisconnectIds = updateEpisodioDto.personagensDisconnectIds;
+    // const { personagensDisconnectIds } = updateEpisodioDto;
+
+    delete updateEpisodioDto.personagensDisconnectIds;
+
+    const data = {
+      ...updateEpisodioDto,
+      personagens: {
+        connect: personagensIds?.map((id) => ({ id })),
+        disconnect: personagensDisconnectIds?.map((id) => ({ id })),
+      },
+    };
+
+    if (updateEpisodioDto.dataEstreia) {
+      data.dataEstreia = new Date(updateEpisodioDto.dataEstreia);
+    }
+
+    return this.prisma.episodio.update({
+      where: { id },
+      data,
+      include: { personagens: true },
+    });
   }
 
   remove(id: number) {
