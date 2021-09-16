@@ -9,15 +9,23 @@ export class EpisodioService {
   constructor(private readonly prisma: PrismaService) {}
 
   create(createEpisodioDto: CreateEpisodioDto) {
+    const personagensIds = createEpisodioDto.personagensIds;
+
+    delete createEpisodioDto.personagensIds;
+
     const data: Prisma.EpisodioCreateInput = {
       ...createEpisodioDto,
       dataEstreia: new Date(createEpisodioDto.dataEstreia),
       personagens: {
         create: [...createEpisodioDto.personagens],
+        connect: personagensIds.map((id) => ({ id })),
       },
     };
 
-    return this.prisma.episodio.create({ data });
+    return this.prisma.episodio.create({
+      data,
+      include: { personagens: true },
+    });
   }
 
   findAll() {

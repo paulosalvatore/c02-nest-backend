@@ -1,6 +1,7 @@
 import { Type } from 'class-transformer';
 import {
   IsISO8601,
+  IsNumber,
   IsOptional,
   IsString,
   ValidateNested,
@@ -22,4 +23,8 @@ export class CreateEpisodioDto implements Episodio {
   @ValidateNested({ each: true })
   @Type(() => CreatePersonagemDto)
   personagens?: CreatePersonagemDto[];
+
+  @IsOptional()
+  @IsNumber({}, { each: true })
+  personagensIds?: number[];
 }
